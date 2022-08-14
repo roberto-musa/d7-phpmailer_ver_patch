@@ -1,0 +1,17 @@
+diff --git a/phpmailer.install b/phpmailer.install
+index d2cf562..d3d70ce 100644
+--- a/phpmailer.install
++++ b/phpmailer.install
+@@ -21,7 +21,7 @@ function phpmailer_requirements($phase) {
+       'title' => $t('PHPMailer library'),
+       'value' => $installed_version,
+     );
+-    if (!version_compare($installed_version, $required_version, '>=')) {
++    $required_comp = explode($required_version, '.', 3);
++	 $required_amount = intval($required_comp[0])*100+intval($required_comp[1])*10+intval($required_comp[2]);
++	 $installed_comp = explode($installed_version, '.', 3);
++	 $installed_amount = intval($installed_version[0])*100+intval($installed_version[1])*10+intval($installed_version[2]);
++	 if ($required_amount>$installed_amount) {
+       $path = 'sites/all/libraries/phpmailer';
+       $requirements['phpmailer']['severity'] = REQUIREMENT_ERROR;
+       $requirements['phpmailer']['description'] = $t('PHPMailer @version or higher is required. Please <a href="@url">download the new version</a>, extract the archive and copy the contents to the following location:<br /><code>@path</code>. Make sure the main file, class.phpmailer.php, is located at<br /><code>@class</code>.', array(
